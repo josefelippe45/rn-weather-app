@@ -1,34 +1,44 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet, TextInput, Platform, TouchableNativeFeedback, TouchableOpacity, ScrollView } from 'react-native';
-import { BorderlessButton } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons'
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Platform, TouchableNativeFeedback, TouchableOpacity, Alert } from 'react-native';
+
 import Colors from '../constants/Colors'
 const EnterScreen = props => {
     let TouchableCmp = TouchableOpacity;
     if (Platform.OS === 'android' && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
+    const [userName, setUserName] = useState('');
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.headerRight}>
                     <Text style={styles.headerText}>Bem </Text>
-                    <BorderlessButton>
-                        <Ionicons
-                            name={Platform.OS === 'android' ? 'md-help' : 'ios-help'}
-                            size={30}
-                            color="#FFF"
-                        />
-                    </BorderlessButton>
                 </View>
                 <Text style={{ ...styles.headerText, paddingLeft: 30 }}>vindo!</Text>
             </View>
             <View style={styles.content}>
                 <Text style={styles.contentText}>Entre com um nome para continuar: </Text>
-                <TextInput style={styles.input} />
-                <Button color={Colors.primary_dark} title="Continuar" onPress={() => { props.navigation.navigate('Weather') }} />
+                <TextInput
+                    style={styles.input}
+                    maxLength={25}
+                    onChangeText={name => { setUserName(name) }}
+                />
+                <View style={styles.touchableCmp}>
+                    <TouchableCmp onPress={() => {
+                        if (userName === '') {
+                            Alert.alert(
+                                title = "Nome inválido",
+                                message = "Digite um nome",
+                                [{ text: 'Okay', style: 'default' }])
+                        } else {
+                            props.navigation.navigate('Weather')
+                        }
+                    }}>
+                        <Text style={styles.buttonText}>Continuar</Text>
+                    </TouchableCmp>
+                </View>
             </View>
-            <View style={styles.footer}>
+            <View style={styles.touchableCmp}>
                 <TouchableCmp style={styles.help}>
-                    <Text style={styles.helpText}>Ajuda/Manual</Text>
+                    <Text style={styles.buttonText}>Ajuda/Manual</Text>
                 </TouchableCmp>
             </View>
         </View>
@@ -52,13 +62,16 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 60,
-        color: '#FFF'
+        color: '#FFF',
+        fontFamily: 'open-sans-bold'
     },
     input: {
         height: 30,
         borderBottomWidth: 1,
         borderBottomColor: 'black',
-        margin: 30
+        margin: 30,
+        maxWidth: '95%',
+        minWidth: 150
     },
     content: {
         flex: 1,
@@ -78,9 +91,10 @@ const styles = StyleSheet.create({
     },
     contentText: {
         fontSize: 18,
-        color: Colors.primary_dark
+        color: Colors.primary_dark,
+        fontFamily: 'open-sans-bold'
     },
-    footer: {
+    touchableCmp: {
         justifyContent: 'center',
         alignItems: "center",
         backgroundColor: Colors.primary_dark,
@@ -88,9 +102,10 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 20
     },
-    helpText: {
+    buttonText: {
         fontSize: 16,
-        color: '#FFF'
+        color: '#FFF',
+        fontFamily: 'open-sans-bold'
     }
 });
 export default EnterScreen;
