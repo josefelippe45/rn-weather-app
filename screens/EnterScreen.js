@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Platform, TouchableNativeFeedback, TouchableOpacity, Alert } from 'react-native';
-
+import Header from '../components/UI/Header'
 import Colors from '../constants/Colors'
 const EnterScreen = props => {
     let TouchableCmp = TouchableOpacity;
@@ -8,12 +8,7 @@ const EnterScreen = props => {
     const [userName, setUserName] = useState('');
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <View style={styles.headerRight}>
-                    <Text style={styles.headerText}>Bem </Text>
-                </View>
-                <Text style={{ ...styles.headerText, paddingLeft: 30 }}>vindo!</Text>
-            </View>
+            <Header text="Bem Vindo!"/>
             <View style={styles.content}>
                 <Text style={styles.contentText}>Entre com um nome para continuar: </Text>
                 <TextInput
@@ -38,8 +33,8 @@ const EnterScreen = props => {
                 </View>
             </View>
             <View style={styles.touchableCmp}>
-                <TouchableCmp style={styles.help}>
-                    <Text style={styles.buttonText}>Ajuda/Manual</Text>
+                <TouchableCmp style={styles.help} onPress={props.navigation.navigate('Help')}>
+                    <Text style={styles.buttonText}>Mais informações e ajuda</Text>
                 </TouchableCmp>
             </View>
         </View>
@@ -49,22 +44,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.secondary,
-    },
-    header: {
-        paddingVertical: 50,
-        paddingHorizontal: 15,
-        backgroundColor: Colors.primary,
-    },
-    headerRight: {
-        flexDirection: "row",
-        justifyContent: 'space-between',
-        /**x line */
-        alignItems: "center"
-    },
-    headerText: {
-        fontSize: 60,
-        color: '#FFF',
-        fontFamily: 'open-sans-bold'
     },
     input: {
         height: 30,
