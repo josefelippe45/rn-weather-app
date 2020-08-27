@@ -20,6 +20,7 @@ const EnterScreen = props => {
                     style={styles.input}
                     maxLength={25}
                     onChangeText={name => { setUserName(name) }}
+                    value={userName}
                 />
                 <View style={styles.touchableCmp}>
                     <TouchableCmp onPress={() => {
@@ -29,7 +30,7 @@ const EnterScreen = props => {
                                 message = "Digite um nome",
                                 [{ text: 'Okay', style: 'default' }])
                         } else {
-                            props.navigation.navigate('Weather')
+                            props.navigation.navigate('Weather', {name: userName})
                         }
                     }}>
                         <Text style={styles.buttonText}>Continuar</Text>
