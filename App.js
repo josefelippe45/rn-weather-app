@@ -26,6 +26,7 @@ export default function App() {
       <RootStack.Navigator>
         <RootStack.Screen name="Enter" component={EnterScreen} options={{ headerShown: false }} />
         <RootStack.Screen name="Weather" component={WeatherScreen} options={{ headerShown: false }} />
+        <RootStack.Screen name="Help" component={HelpScreen} options={{ headerShown: false }} />
       </RootStack.Navigator>
     </NavigationContainer>
 

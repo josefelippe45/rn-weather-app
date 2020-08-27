@@ -1,52 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Header from './UI/Header';
 import Colors from '../constants/Colors';
+import { weatherConditions } from '../utils/WeatherConditions';
 
-const Weather = props => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Feather name="sun" color={Colors.secondary} />
-                <Text>Temperatura</Text>
+const Weather = ({ weather, temperature }) => {
+    if (weather != null) {
+        return (
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <Feather
+                        name={weatherConditions[weather].icon}
+                        color={weatherConditions[weather].color}
+                        size={50}
+                    />
+                    <Text style={{
+                        ...styles.contentText,
+                        color: weatherConditions[weather].color
+                    }}>
+                        {temperature}ºC
+                             </Text>
+                </View>
+                <View style={styles.footer}>
+                    <Text style={{
+                        ...styles.footerText,
+                        color: weatherConditions[weather].color
+                    }}>
+                        {weatherConditions[weather].title}
+                    </Text>
+                    <Text style={{
+                        ...styles.footerSubText,
+                        color: weatherConditions[weather].color
+                    }}>
+                        {weatherConditions[weather].subtitle}
+                    </Text>
+                </View>
             </View>
-            <View style={styles.content}>
-
+        );
+    } else {
+        return (
+            <View>
+                <Text>..</Text>
             </View>
-            <View style={styles.footer}>
-                <Text style={styles.footerText}>Ensolarado</Text>
-                <Text style={styles.footerSubText}>Ande com um protetor solar!</Text>
-            </View>
-        </View>
-    );
+        )
+    }
 };
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.sunny,
-    },
-    header: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: "#FFF",
     },
     content: {
         flex: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-end',
+        alignItems: 'center',
+        justifyContent: "center",
+        paddingTop: 12,
         paddingLeft: 25,
-        marginBottom: 40
+        backgroundColor: '#fff',
+        overflow: "hidden",
+        marginHorizontal: 10,
     },
-    footer:{
+    contentText: {
+        fontFamily: 'open-sans-bold',
+        fontSize: 50,
 
+    },
+    footer: {
     },
     footerText: {
         fontSize: 48,
-        color: '#fff'
+
+        marginLeft: 8,
+        fontFamily: 'open-sans-bold',
     },
     footerSubText: {
+        marginLeft: 8,
+        marginBottom: 10,
         fontSize: 24,
-        color: '#fff'
+        fontFamily: 'open-sans-bold',
+
     }
 });
 
