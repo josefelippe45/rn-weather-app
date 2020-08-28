@@ -31,7 +31,7 @@ const Weather = ({ weather, temperature, city, onUpdate }) => {
                     </Text>
                     <View style={{margin: 20, overflow: 'hidden'}}>
                     <TouchableOpacity onPress={onUpdate}>
-                        <Feather name='rotate-ccw' color={'#8888'} size={50}/>
+                        <Feather name='rotate-ccw' color={weatherConditions[weather].color} size={50}/>
                     </TouchableOpacity>
                 </View>
                 </View>
@@ -62,7 +62,7 @@ const Weather = ({ weather, temperature, city, onUpdate }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF",
+        backgroundColor: Colors.primary,
     },
     content: {
         flex: 1,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingTop: 12,
         paddingLeft: 25,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.primary,
         overflow: "hidden",
         marginHorizontal: 10,
     },
