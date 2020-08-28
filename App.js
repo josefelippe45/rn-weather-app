@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './navigation/WeatherNavigator';
 import EnterScreen from './screens/EnterScreen';
 import WeatherScreen from './screens/WeatherScreen';
+import HelpScreen from './screens/HelpScreen'
 
 //fetching fonts
 const fetchFonts = () => {

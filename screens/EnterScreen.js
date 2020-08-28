@@ -33,7 +33,7 @@ const EnterScreen = props => {
                 </View>
             </View>
             <View style={styles.touchableCmp}>
-                <TouchableCmp style={styles.help} onPress={props.navigation.navigate('Help')}>
+                <TouchableCmp onPress={() => {props.navigation.navigate('Help')}}>
                     <Text style={styles.buttonText}>Mais informações e ajuda</Text>
                 </TouchableCmp>
             </View>
