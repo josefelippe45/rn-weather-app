@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import Colors from '../constants/Colors';
 import { API_KEY } from '../utils/WeatherAPIKey'
 import Weather from '../components/Weather'
 export default class WeatherScreen extends React.Component {
@@ -8,6 +8,8 @@ export default class WeatherScreen extends React.Component {
         isLoading: true,
         temperature: 0,
         weatherCondition: null,
+        city: '',
+        onUpdate: null,
     };
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
@@ -18,6 +20,7 @@ export default class WeatherScreen extends React.Component {
                 console.log(error.code, error.message);
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+
         );
     }
     fetchWeather(lat = 25, lon = 25) {
@@ -26,20 +29,32 @@ export default class WeatherScreen extends React.Component {
         )
             .then(res => res.json())
             .then(json => {
+                console.log(json)
                 this.setState({
                     temperature: json.main.temp,
                     weatherCondition: json.weather[0].main,
-                    isLoading: false
+                    city: json.name,
+                    isLoading: false,
                 });
             });
     }
     render() {
-        const { isLoading, weatherCondition, temperature } = this.state;
+        const { isLoading, weatherCondition, temperature, city, onUpdate } = this.state;
         return (
             <View style={styles.container}>
                 {isLoading
-                    ? <Text>Fetching The Weather</Text>
-                    : <Weather weather={weatherCondition} temperature={temperature}  />
+                    ? <View style={styles.load}>
+                        <Text style={styles.loadText}>Carregando dados do clima :)</Text>
+                    </View>
+
+                    : <View style={styles.container}>
+                        <Weather
+                            weather={weatherCondition}
+                            temperature={temperature}
+                            city={city}
+                            onUpdate={() => { }}
+                        />
+                    </View>
                 }
             </View>
         );
@@ -49,6 +64,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
-    }
+    },
+    load: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.primary,
+    },
+    loadText: {
+        fontSize: 16,
+        color: '#FFF',
+        fontFamily: 'open-sans-bold',
+        marginVertical: 6
+    },
 });
 

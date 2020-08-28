@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Header from './UI/Header';
 import Colors from '../constants/Colors';
 import { weatherConditions } from '../utils/WeatherConditions';
 
-const Weather = ({ weather, temperature }) => {
+const Weather = ({ weather, temperature, city, onUpdate }) => {
+    // let TouchableCmp = TouchableOpacity;
+    // if (Platform.OS === 'android' && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
     if (weather != null) {
         return (
             <View style={styles.container}>
@@ -20,7 +22,18 @@ const Weather = ({ weather, temperature }) => {
                         color: weatherConditions[weather].color
                     }}>
                         {temperature}ºC
-                             </Text>
+                    </Text>
+                    <Text style={{
+                        ...styles.contentTextCity,
+                        color: weatherConditions[weather].color
+                    }}>
+                        {city}
+                    </Text>
+                    <View style={{margin: 20, overflow: 'hidden'}}>
+                    <TouchableOpacity onPress={onUpdate}>
+                        <Feather name='rotate-ccw' color={'#8888'} size={50}/>
+                    </TouchableOpacity>
+                </View>
                 </View>
                 <View style={styles.footer}>
                     <Text style={{
@@ -65,6 +78,10 @@ const styles = StyleSheet.create({
         fontFamily: 'open-sans-bold',
         fontSize: 50,
 
+    },
+    contentTextCity:{
+        fontFamily: 'open-sans-bold',
+        fontSize: 20,
     },
     footer: {
     },
