@@ -10,11 +10,17 @@ export default class WeatherScreen extends React.Component {
         weatherCondition: null,
         city: '',
         onUpdate: null,
+        latitude: 0,
+        longitude: 0
     };
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
             position => {
                 this.fetchWeather(position.coords.latitude, position.coords.longitude);
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                })
             },
             error => {
                 console.log(error.code, error.message);
@@ -23,13 +29,12 @@ export default class WeatherScreen extends React.Component {
 
         );
     }
-    fetchWeather(lat = 25, lon = 25) {
+    fetchWeather(lat, lon) {
         fetch(
             `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}&units=metric`
         )
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 this.setState({
                     temperature: json.main.temp,
                     weatherCondition: json.weather[0].main,
@@ -39,7 +44,7 @@ export default class WeatherScreen extends React.Component {
             });
     }
     render() {
-        const { isLoading, weatherCondition, temperature, city, onUpdate } = this.state;
+        const { isLoading, weatherCondition, temperature, city, latitude, longitude } = this.state;
         return (
             <View style={styles.container}>
                 {isLoading
@@ -52,7 +57,7 @@ export default class WeatherScreen extends React.Component {
                             weather={weatherCondition}
                             temperature={temperature}
                             city={city}
-                            onUpdate={() => { }}
+                            onUpdate={() => { this.fetchWeather(latitude, longitude) }}
                         />
                     </View>
                 }

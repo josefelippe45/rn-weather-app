@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import Header from '../components/UI/Header';
 import Colors from '../constants/Colors';
 import { Feather } from '@expo/vector-icons';
 const HelpScreen = ({ navigation }) => {
-    let TouchableCmp = TouchableOpacity;
-    if (Platform.OS === 'android' && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
+
     return (
         <View style={styles.container}>
             <Header text="Sobre o App" />
@@ -26,9 +25,9 @@ const HelpScreen = ({ navigation }) => {
                     estar conectado a internet
                 </Text>
                 <View style={styles.touchableCmp}>
-                    <TouchableCmp onPress={() => { navigation.dispatch(CommonActions.goBack()); }}>
+                    <TouchableOpacity onPress={() => { navigation.dispatch(CommonActions.goBack()); }}>
                         <Feather name="arrow-left" size={36} color='#FFF' />
-                    </TouchableCmp>
+                    </TouchableOpacity>
                 </View>
 
             </View>

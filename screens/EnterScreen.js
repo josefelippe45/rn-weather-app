@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Platform, TouchableNativeFeedback, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Platform,TouchableOpacity, Alert } from 'react-native';
 import Header from '../components/UI/Header'
 import Colors from '../constants/Colors'
 const EnterScreen = props => {
-    let TouchableCmp = TouchableOpacity;
-    if (Platform.OS === 'android' && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
+    // let TouchableCmp = TouchableOpacity;
+    // if (Platform.OS === 'android' && Platform.Version >= 21) TouchableCmp = TouchableNativeFeedback;
     const [userName, setUserName] = useState('');
     return (
         <View style={styles.container}>
@@ -18,7 +18,7 @@ const EnterScreen = props => {
                     value={userName}
                 />
                 <View style={styles.touchableCmp}>
-                    <TouchableCmp onPress={() => {
+                    <TouchableOpacity onPress={() => {
                         if (userName === '') {
                             Alert.alert(
                                 title = "Nome inválido",
@@ -29,13 +29,13 @@ const EnterScreen = props => {
                         }
                     }}>
                         <Text style={styles.buttonText}>Continuar</Text>
-                    </TouchableCmp>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.touchableCmp}>
-                <TouchableCmp onPress={() => {props.navigation.navigate('Help')}}>
+                <TouchableOpacity onPress={() => {props.navigation.navigate('Help')}}>
                     <Text style={styles.buttonText}>Mais informações e ajuda</Text>
-                </TouchableCmp>
+                </TouchableOpacity>
             </View>
         </View>
     );
